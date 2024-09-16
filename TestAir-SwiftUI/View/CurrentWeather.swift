@@ -39,8 +39,9 @@ struct CurrentWeather: View {
 
             Spacer()
         }
-        .navigationTitle("Go")
-        .background(Color.blue)
+        .background( Image("dark_background")
+            .resizable()
+            .scaledToFill())
         .ignoresSafeArea()
     }
 }

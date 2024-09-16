@@ -15,36 +15,35 @@ struct ContentView: View {
         NavigationView {
             VStack {
                 Spacer()
-                
-                Image("Logo")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 300, height: 75)
-                
-                HStack {
-                    TextField("Enter text", text: $inputText)
-                        .padding()  // Add padding inside the TextField
-                        .frame(maxWidth: .infinity, maxHeight: 50)
-                        .background(Color.white)  // Background color for the TextField
-                        .cornerRadius(10)  // Corner radius for the background
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)  // Overlay with rounded corners
-                                .stroke(Color.gray, lineWidth: 1)  // Border color and width
-                        )
-                        .padding(.horizontal, 50)  // Padding around the TextField
+                VStack {
+                    Image("Logo")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 300, height: 75)
                     
-                    NavigationLink(destination: CurrentWeather()) {
-                        Text("Go")
-                            .foregroundColor(.white)
+                    HStack {
+                        TextField("Enter text", text: $inputText)
                             .padding()
-                            .frame(maxWidth: 60)
-                            .background(Color.blue)
+                            .frame(maxWidth: .infinity, maxHeight: 50)
+                            .background(Color.white)
                             .cornerRadius(10)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(Color.gray, lineWidth: 1)
+                            )
+                        NavigationLink(destination: CurrentWeather()) {
+                            Text("Go")
+                                .foregroundColor(.white)
+                                .padding()
+                                .frame(maxWidth: 60)
+                                .background(Color.blue)
+                                .cornerRadius(10)
+                        }
                     }
+                    .padding(.horizontal, 30)
+                    .padding(.bottom, 20)
                 }
-                
-                .padding(.horizontal, 30)
-                .padding(.bottom, 20 )
+                .frame(maxHeight: .infinity)
                 
                 NavigationLink(destination: HistoryView()) {
                     Text("History")
@@ -54,14 +53,14 @@ struct ContentView: View {
                         .background(Color.green)
                         .cornerRadius(10)
                 }
-                
-                Spacer()
+                .padding(.horizontal, 30)
+                .padding(.bottom, 20) // Padding from the bottom
             }
             .navigationBarHidden(true)
             .background(
-                LinearGradient(gradient: Gradient(colors: [Color.green, Color.yellow]),
-                               startPoint: .topLeading,
-                               endPoint: .bottomTrailing)
+                Image("light_background")
+                    .resizable()
+                    .scaledToFill()
             )
             .ignoresSafeArea()
         }
