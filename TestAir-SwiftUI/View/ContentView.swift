@@ -14,7 +14,9 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             VStack {
+                
                 Spacer()
+                
                 VStack {
                     Image("Logo")
                         .resizable()
@@ -31,6 +33,7 @@ struct ContentView: View {
                                 RoundedRectangle(cornerRadius: 10)
                                     .stroke(Color.gray, lineWidth: 1)
                             )
+                        
                         NavigationLink(destination: CurrentWeather()) {
                             Text("Go")
                                 .foregroundColor(.white)
@@ -55,7 +58,7 @@ struct ContentView: View {
                 }
                 .padding(.horizontal, 120)
                 .padding(.bottom, 30)
-
+                
             }
             .navigationBarHidden(true)
             .background(

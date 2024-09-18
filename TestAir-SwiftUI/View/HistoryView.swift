@@ -12,31 +12,44 @@ struct HistoryView: View {
     var body: some View {
         VStack {
 
-            Text("History Screen")
+            Text("History")
                 .font(.largeTitle)
-                .navigationTitle("History")
                 .padding(.top, 50)
             
             Spacer()
             
-            ZStack(alignment: .topLeading) {
+            ZStack(alignment: .bottomLeading) {
                 RoundedRectangle(cornerRadius: 20)
                     .fill(Color.white)
                     .frame(width: 300, height: 200)
                     .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
-
-                Text("Sep 1, 2024")
+                
+                Image(systemName: "cloud")
+                    .resizable()
+                    .frame(width: 50, height: 40)
+                    .padding(.leading, 15)
+                    .padding(.bottom, 150)
+                
+                Text("Cloudy")
                     .font(.subheadline)
-                    .foregroundColor(.gray)
-                    .padding([.top, .leading], 15)
-
+                    .foregroundColor(.black)
+                    .padding(.bottom, 160)
+                    .padding(.leading, 80)
+                    .frame(maxWidth: .infinity, alignment: .topLeading)
+                
+                Text("Sep\n 01")
+                    .font(.subheadline)
+                    .foregroundColor(.black)
+                    .padding([.bottom, .trailing], 15)
+                    .frame(maxWidth: .infinity, alignment: .bottomTrailing)
+                
                 Text("New York")
                     .font(.subheadline)
-                    .foregroundColor(.gray)
-                    .padding([.top, .trailing], 15)
-                    .frame(maxWidth: .infinity, alignment: .topTrailing)
-
-                Text("72°F")
+                    .foregroundColor(.black)
+                    .padding([.bottom, .leading], 15)
+                    .frame(maxWidth: .infinity, alignment: .bottomLeading)
+                
+                Text("72°")
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .foregroundColor(.black)

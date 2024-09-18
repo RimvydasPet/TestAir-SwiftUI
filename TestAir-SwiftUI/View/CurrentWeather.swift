@@ -10,7 +10,13 @@ import SwiftUI
 struct CurrentWeather: View {
     var body: some View {
         VStack {
+            
+            Text("Current Weather")
+                .font(.largeTitle)
+                .padding(.top, 50)
+            
             Spacer()
+            
                 ZStack(alignment: .bottomLeading) {
                     RoundedRectangle(cornerRadius: 20)
                         .fill(Color.white)
@@ -42,7 +48,7 @@ struct CurrentWeather: View {
                         .padding([.bottom, .leading], 15)
                         .frame(maxWidth: .infinity, alignment: .bottomLeading)
                     
-                    Text("72°F")
+                    Text("72°")
                         .font(.largeTitle)
                         .fontWeight(.bold)
                         .foregroundColor(.black)
