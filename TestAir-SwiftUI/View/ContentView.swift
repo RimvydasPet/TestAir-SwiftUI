@@ -35,7 +35,7 @@ struct ContentView: View {
                             Text("Go")
                                 .foregroundColor(.white)
                                 .padding()
-                                .frame(maxWidth: 60)
+                                .frame(maxWidth: 60, maxHeight: 50)
                                 .background(Color.blue)
                                 .cornerRadius(10)
                         }
@@ -53,8 +53,9 @@ struct ContentView: View {
                         .background(Color.green)
                         .cornerRadius(10)
                 }
-                .padding(.horizontal, 30)
-                .padding(.bottom, 20) // Padding from the bottom
+                .padding(.horizontal, 120)
+                .padding(.bottom, 30)
+
             }
             .navigationBarHidden(true)
             .background(
