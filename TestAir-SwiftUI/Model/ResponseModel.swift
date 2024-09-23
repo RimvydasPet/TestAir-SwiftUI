@@ -11,6 +11,7 @@ struct ResponseModel: Codable {
     let name: String
     let main: Main
     let weather: [Weather]
+    let dt: Int
 }
 
 struct Main: Codable {
@@ -20,7 +21,5 @@ struct Main: Codable {
 struct Weather: Codable {
     let description: String
     let id: Int
-}
-struct Date: Codable {
-    let dt: Int
+    let icon: String
 }

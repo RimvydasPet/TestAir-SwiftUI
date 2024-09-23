@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct CurrentWeather: View {
+    var weahter: ResponseModel
     var body: some View {
         VStack {
             
@@ -23,32 +24,32 @@ struct CurrentWeather: View {
                         .frame(width: 300, height: 200)
                         .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
                     
-                    Image(systemName: "cloud")
+                    Image(systemName: "\(weahter.weather[0].icon)")
                         .resizable()
                         .frame(width: 50, height: 40)
                         .padding(.leading, 15)
                         .padding(.bottom, 150)
                     
-                    Text("Cloudy")
+                    Text("\(weahter.weather[0].description)")
                         .font(.subheadline)
                         .foregroundColor(.black)
                         .padding(.bottom, 160)
                         .padding(.leading, 80)
                         .frame(maxWidth: .infinity, alignment: .topLeading)
                     
-                    Text("Sep 1\n2024")
+                    Text("\(weahter.dt)")
                         .font(.subheadline)
                         .foregroundColor(.black)
                         .padding([.bottom, .trailing], 15)
                         .frame(maxWidth: .infinity, alignment: .bottomTrailing)
                     
-                    Text("New York")
+                    Text("\(weahter.name)")
                         .font(.subheadline)
                         .foregroundColor(.black)
                         .padding([.bottom, .leading], 15)
                         .frame(maxWidth: .infinity, alignment: .bottomLeading)
                     
-                    Text("72°")
+                    Text("\(weahter.main.temp)°")
                         .font(.largeTitle)
                         .fontWeight(.bold)
                         .foregroundColor(.black)
@@ -66,9 +67,9 @@ struct CurrentWeather: View {
     }
 
     //MARK: - Preview
-    struct CurrentWeather_Previews: PreviewProvider {
-        static var previews: some View {
-            CurrentWeather()
-        }
-    }
+//    struct CurrentWeather_Previews: PreviewProvider {
+//        static var previews: some View {
+//            CurrentWeather()
+//        }
+//    }
 

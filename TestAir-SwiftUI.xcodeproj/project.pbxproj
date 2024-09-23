@@ -19,6 +19,7 @@
 		BD2DEA312C989EA600CC2B5E /* CurrentWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2DEA302C989EA600CC2B5E /* CurrentWeather.swift */; };
 		BD2DEA332C9B4F1D00CC2B5E /* ResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2DEA322C9B4F1D00CC2B5E /* ResponseModel.swift */; };
 		BD2DEA352C9B50E400CC2B5E /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2DEA342C9B50E400CC2B5E /* WeatherModel.swift */; };
+		BD2DEA382C9B547300CC2B5E /* NetworkingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2DEA372C9B547300CC2B5E /* NetworkingController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,7 @@
 		BD2DEA302C989EA600CC2B5E /* CurrentWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeather.swift; sourceTree = "<group>"; };
 		BD2DEA322C9B4F1D00CC2B5E /* ResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseModel.swift; sourceTree = "<group>"; };
 		BD2DEA342C9B50E400CC2B5E /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
+		BD2DEA372C9B547300CC2B5E /* NetworkingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 			children = (
 				BD2DEA2C2C989E1E00CC2B5E /* Model */,
 				BD2DEA2B2C989E1700CC2B5E /* View */,
+				BD2DEA362C9B53E100CC2B5E /* Controllers */,
 				BD2DEA2A2C989DF200CC2B5E /* AppData */,
 				BD2DEA042C9899CE00CC2B5E /* Assets.xcassets */,
 				BD2DEA062C9899CF00CC2B5E /* Preview Content */,
@@ -164,6 +167,14 @@
 				BD2DEA342C9B50E400CC2B5E /* WeatherModel.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		BD2DEA362C9B53E100CC2B5E /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				BD2DEA372C9B547300CC2B5E /* NetworkingController.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -297,6 +308,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BD2DEA012C9899CC00CC2B5E /* ContentView.swift in Sources */,
+				BD2DEA382C9B547300CC2B5E /* NetworkingController.swift in Sources */,
 				BD2DEA312C989EA600CC2B5E /* CurrentWeather.swift in Sources */,
 				BD2DEA2E2C989E4600CC2B5E /* HistoryView.swift in Sources */,
 				BD2DEA352C9B50E400CC2B5E /* WeatherModel.swift in Sources */,

@@ -34,7 +34,7 @@ struct ContentView: View {
                                     .stroke(Color.gray, lineWidth: 1)
                             )
                         
-                        NavigationLink(destination: CurrentWeather()) {
+                        NavigationLink(destination: CurrentWeather(weahter: ResponseModel(name: <#T##String#>, main: <#T##Main#>, weather: <#T##[Weather]#>, dt: <#T##Int#>))) {
                             Text("Go")
                                 .foregroundColor(.white)
                                 .padding()
@@ -71,9 +71,9 @@ struct ContentView: View {
     }
 }
 
-//MARK: - Preview
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
+////MARK: - Preview
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ContentView()
+//    }
+//}
