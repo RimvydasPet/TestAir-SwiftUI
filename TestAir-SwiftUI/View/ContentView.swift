@@ -6,25 +6,25 @@
 //
 
 import SwiftUI
-import SwiftData
 
 struct ContentView: View {
     @State private var inputText: String = ""
-    
+    @StateObject var weatherManager = WeatherManager()
+    @State private var weatherData: WeatherModel?
+
     var body: some View {
         NavigationView {
             VStack {
-                
                 Spacer()
-                
+
                 VStack {
                     Image("Logo")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 300, height: 75)
-                    
+
                     HStack {
-                        TextField("Enter text", text: $inputText)
+                        TextField("Enter city name", text: $inputText)
                             .padding()
                             .frame(maxWidth: .infinity, maxHeight: 50)
                             .background(Color.white)
@@ -34,20 +34,27 @@ struct ContentView: View {
                                     .stroke(Color.gray, lineWidth: 1)
                             )
                         
-                        NavigationLink(destination: CurrentWeather(weahter: ResponseModel(name: <#T##String#>, main: <#T##Main#>, weather: <#T##[Weather]#>, dt: <#T##Int#>))) {
-                            Text("Go")
-                                .foregroundColor(.white)
-                                .padding()
-                                .frame(maxWidth: 60, maxHeight: 50)
-                                .background(Color.blue)
-                                .cornerRadius(10)
+                        Button(action: {
+                            weatherManager.fetchWeather(cityName: inputText)
+                        }) {
+                            
+                            NavigationLink(destination: CurrentWeather(weather: weatherManager.weather ?? WeatherModel(cityName: "Kaunas", temperature: 2.0, icon: "sunny", description: "not badnius", dt: 3.0))) {
+                                Text("Go")
+                                    .foregroundColor(.white)
+                                    .padding()
+                                    .frame(maxWidth: 60, maxHeight: 50)
+                                    .background(Color.blue)
+                                    .cornerRadius(10)
+                            }
                         }
                     }
                     .padding(.horizontal, 30)
                     .padding(.bottom, 20)
+
+                    
                 }
                 .frame(maxHeight: .infinity)
-                
+
                 NavigationLink(destination: HistoryView()) {
                     Text("History")
                         .foregroundColor(.white)
@@ -58,7 +65,6 @@ struct ContentView: View {
                 }
                 .padding(.horizontal, 120)
                 .padding(.bottom, 30)
-                
             }
             .navigationBarHidden(true)
             .background(
@@ -71,9 +77,11 @@ struct ContentView: View {
     }
 }
 
-////MARK: - Preview
-//struct ContentView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ContentView()
-//    }
-//}
+    
+    
+    ////MARK: - Preview
+    //struct ContentView_Previews: PreviewProvider {
+    //    static var previews: some View {
+    //        ContentView()
+    //    }
+    //}

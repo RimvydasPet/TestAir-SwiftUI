@@ -13,11 +13,13 @@ protocol WeatherManagerDelegate {
     func didFailWithError(error: Error)
 }
 
-struct WeatherManager {
+class WeatherManager: ObservableObject {
     let weatherURL = "https://api.openweathermap.org/data/2.5/weather?appid=90101379686294c192bf23f64e88f73c&units=metric"
     let iconURL = "https://openweathermap.org/img/wn/"
     
     var delegate: WeatherManagerDelegate?
+    @Published var weather: WeatherModel?
+    @Published var errorMessage: String?
     
     func fetchWeather(cityName: String) {
         let urlString = "\(weatherURL)&q=\(cityName)"
@@ -25,22 +27,23 @@ struct WeatherManager {
     }
     
     func performRequest(with urlString: String) {
-        if let url = URL(string: urlString) {
-            let session = URLSession(configuration: .default)
-            let task = session.dataTask(with: url) { (data, response, error) in
-                if error != nil {
-                    self.delegate?.didFailWithError(error: error!)
-                    return
-                }
-                if let safeData = data {
-                    if let weather = self.parseJSON(safeData) {
-                        self.delegate?.didUpdateWeather(self, weather: weather)
-                    }
+        guard let url = URL(string: urlString) else { return }
+        
+        let session = URLSession(configuration: .default)
+        let task = session.dataTask(with: url) { (data, response, error) in
+            if error != nil {
+                self.delegate?.didFailWithError(error: error!)
+                return
+            }
+            if let safeData = data {
+                if let weather = self.parseJSON(safeData) {
+                    self.delegate?.didUpdateWeather(self, weather: weather)
                 }
             }
-            task.resume()
         }
+        task.resume()
     }
+    
     
     func downloadImage(from url: URL, completion: @escaping (UIImage?) -> Void) {
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
@@ -60,9 +63,9 @@ struct WeatherManager {
             let temp = decodedData.main.temp
             let name = decodedData.name
             let date = decodedData.dt
-            let condition = decodedData.weather[0].description
-            let imageData = decodedData.weather[0].icon
-            let iconUrl = "\(iconURL)\(imageData)@2x.png"
+            let condition = decodedData.weather.first?.description ?? "No description"
+            let iconData = decodedData.weather.first?.icon ?? "01d"
+            let iconUrl = "\(iconURL)\(iconData)@2x.png"
             let weather = WeatherModel(cityName: name, temperature: temp, icon: iconUrl, description: condition, dt: date)
             return weather
         } catch {
@@ -70,5 +73,5 @@ struct WeatherManager {
             return nil
         }
     }
+    
 }
-

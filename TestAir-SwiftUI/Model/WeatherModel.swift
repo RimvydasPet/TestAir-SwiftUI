@@ -14,9 +14,9 @@ class WeatherModel: ObservableObject, Identifiable {
     @Published var icon: String
     @Published var description: String
     
-    var dt: Int?
+    var dt: Double?
     
-    init(cityName: String, temperature: Double, icon: String, description: String, dt: Int?) {
+    init(cityName: String, temperature: Double, icon: String, description: String, dt: Double?) {
         self.cityName = cityName
         self.temperature = temperature
         self.icon = icon
