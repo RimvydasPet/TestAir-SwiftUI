@@ -9,36 +9,42 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var inputText: String = ""
+    @State private var weatherModel: WeatherModel?
     @StateObject var weatherManager = WeatherManager()
-    @State private var weatherData: WeatherModel?
-
+    @State private var errorMessage: String? = nil
+    
+    
     var body: some View {
         NavigationView {
             VStack {
                 Spacer()
-
+                
                 VStack {
                     Image("Logo")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 300, height: 75)
-
+                    
                     HStack {
-                        TextField("Enter city name", text: $inputText)
-                            .padding()
-                            .frame(maxWidth: .infinity, maxHeight: 50)
-                            .background(Color.white)
-                            .cornerRadius(10)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color.gray, lineWidth: 1)
-                            )
-                        
                         Button(action: {
-                            weatherManager.fetchWeather(cityName: inputText)
+                            weatherManager.fetchWeather(cityName: inputText) { (weather, error) in
+                                if let error = error {
+                                    self.errorMessage = error.localizedDescription
+                                } else if let weather = weather {
+                                    self.weatherModel = weather
+                                }
+                            }
                         }) {
-                            
-                            NavigationLink(destination: CurrentWeather(weather: weatherManager.weather ?? WeatherModel(cityName: "Kaunas", temperature: 2.0, icon: "sunny", description: "not badnius", dt: 3.0))) {
+                            TextField("Enter city name", text: $inputText)
+                                .padding()
+                                .frame(maxWidth: .infinity, maxHeight: 50)
+                                .background(Color.white)
+                                .cornerRadius(10)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(Color.gray, lineWidth: 1)
+                                )
+                            NavigationLink(destination: CurrentWeather(viewModel: weatherModel ?? WeatherModel(cityName: "Kaunas", temperature: 0.0, icon: "sun.max", description: "sunny", dt: 0.0))) {
                                 Text("Go")
                                     .foregroundColor(.white)
                                     .padding()
@@ -50,11 +56,9 @@ struct ContentView: View {
                     }
                     .padding(.horizontal, 30)
                     .padding(.bottom, 20)
-
-                    
                 }
                 .frame(maxHeight: .infinity)
-
+                
                 NavigationLink(destination: HistoryView()) {
                     Text("History")
                         .foregroundColor(.white)
@@ -77,11 +81,11 @@ struct ContentView: View {
     }
 }
 
-    
-    
-    ////MARK: - Preview
-    //struct ContentView_Previews: PreviewProvider {
-    //    static var previews: some View {
-    //        ContentView()
-    //    }
-    //}
+
+
+////MARK: - Preview
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ContentView()
+//    }
+//}

@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-class WeatherModel: ObservableObject, Identifiable {
+class WeatherModel: ObservableObject {
     @Published var cityName: String
     @Published var temperature: Double
     @Published var icon: String
