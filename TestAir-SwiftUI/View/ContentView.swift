@@ -12,6 +12,7 @@ struct ContentView: View {
     @State private var weatherModel: WeatherModel?
     @StateObject var weatherManager = WeatherManager()
     @State private var errorMessage: String? = nil
+    @State private var downloadedImage: UIImage? = nil
     
     
     var body: some View {

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CurrentWeather: View {
     @ObservedObject var viewModel: WeatherModel
+    @StateObject var weatherManager = WeatherManager()
     
     var body: some View {
         VStack {
@@ -66,7 +67,7 @@ struct CurrentWeather: View {
         .ignoresSafeArea()
     }
 }
-    //MARK: - Preview
+//MARK: - Preview
 //    struct CurrentWeather_Previews: PreviewProvider {
 //        static var previews: some View {
 //            CurrentWeather()

@@ -36,7 +36,7 @@ class WeatherModel: ObservableObject {
     var formattedDate: String? {
         guard let date = date else { return nil }
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EE\ndd"
+        dateFormatter.dateFormat = "EE\n  dd"
         dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
         return dateFormatter.string(from: date)
     }
