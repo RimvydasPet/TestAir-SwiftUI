@@ -4,11 +4,11 @@
 //
 //  Created by Rimvydas on 2024-09-16.
 //
-
+import SDWebImageSwiftUI
 import SwiftUI
 
 struct CurrentWeather: View {
-    @ObservedObject var viewModel: WeatherModel
+     var viewModel: WeatherModel
     @StateObject var weatherManager = WeatherManager()
     
     var body: some View {
@@ -26,7 +26,7 @@ struct CurrentWeather: View {
                     .frame(width: 300, height: 200)
                     .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
                 
-                Image(systemName: "\(viewModel.icon)")
+                WebImage(url: URL(string: "\(viewModel.icon)" ))
                     .resizable()
                     .frame(width: 40, height: 40)
                     .padding(.leading, 15)
@@ -60,17 +60,10 @@ struct CurrentWeather: View {
             .frame(width: 300, height: 200)
             
             Spacer()
+            }
+            .background( Image("dark_background")
+                .resizable()
+                .scaledToFill())
+            .ignoresSafeArea()
         }
-        .background( Image("dark_background")
-            .resizable()
-            .scaledToFill())
-        .ignoresSafeArea()
     }
-}
-//MARK: - Preview
-//    struct CurrentWeather_Previews: PreviewProvider {
-//        static var previews: some View {
-//            CurrentWeather()
-//        }
-//    }
-
