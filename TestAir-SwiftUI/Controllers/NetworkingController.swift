@@ -33,7 +33,6 @@ class WeatherManager: ObservableObject {
                     }
                     return
                 }
-                
                 completion(nil, error)
             }
             task.resume()
