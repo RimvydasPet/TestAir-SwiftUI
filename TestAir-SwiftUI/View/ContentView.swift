@@ -25,6 +25,18 @@ struct ContentView: View {
                         .frame(width: 300, height: 75)
                     
                     HStack {
+                        // TextField for input
+                        TextField("Enter city name", text: $inputText)
+                            .padding()
+                            .frame(maxWidth: .infinity, maxHeight: 50)
+                            .background(Color.white)
+                            .cornerRadius(10)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(Color.gray, lineWidth: 1)
+                            )
+                        
+                        // "Go" button for fetching weather
                         Button(action: {
                             weatherManager.fetchWeather(cityName: inputText) { (weather, error) in
                                 if let error = error {
@@ -34,30 +46,34 @@ struct ContentView: View {
                                 }
                             }
                         }) {
-                            TextField("Enter city name", text: $inputText)
+                            Text("Go")
+                                .foregroundColor(.white)
                                 .padding()
-                                .frame(maxWidth: .infinity, maxHeight: 50)
-                                .background(Color.white)
+                                .frame(maxWidth: 60, maxHeight: 50)
+                                .background(Color.blue)
                                 .cornerRadius(10)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .stroke(Color.gray, lineWidth: 1)
-                                )
-                            NavigationLink(destination: CurrentWeather(viewModel: weatherModel ?? WeatherModel(cityName: "Kaunas", temperature: 0.0, icon: "cloud", description: "sunny", dt: 0.0))) {
-                                Text("Go")
-                                    .foregroundColor(.white)
-                                    .padding()
-                                    .frame(maxWidth: 60, maxHeight: 50)
-                                    .background(Color.blue)
-                                    .cornerRadius(10)
-                            }
                         }
                     }
                     .padding(.horizontal, 30)
                     .padding(.bottom, 20)
+                    
+                    // Conditional NavigationLink to weather details screen
+                    if let weatherModel = weatherModel {
+                        NavigationLink(
+                            destination: CurrentWeather(viewModel: weatherModel)) {
+                            Text("View Weather")
+                                .foregroundColor(.white)
+                                .padding()
+                                .frame(maxWidth: .infinity, maxHeight: 50)
+                                .background(Color.green)
+                                .cornerRadius(10)
+                        }
+                        .padding(.horizontal, 30)
+                    }
                 }
                 .frame(maxHeight: .infinity)
                 
+                // Link to History screen
                 NavigationLink(destination: HistoryView()) {
                     Text("History")
                         .foregroundColor(.white)
@@ -78,6 +94,7 @@ struct ContentView: View {
             .ignoresSafeArea()
         }
     }
+
 }
 
 
