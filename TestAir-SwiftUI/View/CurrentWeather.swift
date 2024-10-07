@@ -8,7 +8,7 @@ import SDWebImageSwiftUI
 import SwiftUI
 
 struct CurrentWeather: View {
-     var viewModel: WeatherModel
+    var viewModel: WeatherModel
     @StateObject var weatherManager = WeatherManager()
     
     var body: some View {
@@ -22,14 +22,15 @@ struct CurrentWeather: View {
             
             ZStack(alignment: .bottomLeading) {
                 RoundedRectangle(cornerRadius: 20)
-                    .fill(Color.white)
+                    .fill(Color.white.opacity(0.8))
                     .frame(width: 300, height: 200)
-                    .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
+                    .shadow(color: Color.black.opacity(0.8), radius: 10, x: 0, y: 5)
                 
                 WebImage(url: URL(string: "\(viewModel.icon)" ))
-                    .resizable()
                     .frame(width: 40, height: 40)
-                    .padding(.leading, 15)
+                    .scaledToFit()
+                    .padding(.top, 25)
+                    .padding(.leading, 25)
                     .padding(.bottom, 150)
                 
                 Text("\(viewModel.description)")
@@ -67,3 +68,10 @@ struct CurrentWeather: View {
             .ignoresSafeArea()
         }
     }
+////MARK: - Preview
+//struct CurrentWeather_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CurrentWeather(viewModel: WeatherModel(cityName: "Kaunas", temperature: 0.0, icon: "https://openweathermap.org/img/wn/10n@2x.png"
+//, description: "sunny", dt: 0.0))
+//    }
+//}
