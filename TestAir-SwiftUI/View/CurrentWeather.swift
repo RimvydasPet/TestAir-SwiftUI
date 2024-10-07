@@ -22,13 +22,10 @@ struct CurrentWeather: View {
             
             ZStack(alignment: .bottomLeading) {
                 RoundedRectangle(cornerRadius: 20)
-                    .fill(Color.white)
                     .fill(Color.white.opacity(0.8))
                     .frame(width: 300, height: 200)
                     .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
-                    .shadow(color: Color.black.opacity(0.8), radius: 10, x: 0, y: 5)
                 
-<<<<<<< HEAD
                 AsyncImage(url: URL(string: viewModel.icon))
                     .frame(width: 40, height: 40)
                     .padding(.bottom, 145)
@@ -69,21 +66,11 @@ struct CurrentWeather: View {
             .ignoresSafeArea()
         }
     }
-<<<<<<< HEAD
-}
-//MARK: - Preview
-    struct CurrentWeather_Previews: PreviewProvider {
-        static var previews: some View {
-            CurrentWeather(viewModel: WeatherModel(cityName: "Kaunas", temperature: 0.0, icon: "https://openweathermap.org/img/wn/01n@2x.png", description: "sunny", dt: 0.0))
-        }
-    }
 
-=======
+
 ////MARK: - Preview
-//struct CurrentWeather_Previews: PreviewProvider {
-//    static var previews: some View {
-//        CurrentWeather(viewModel: WeatherModel(cityName: "Kaunas", temperature: 0.0, icon: "https://openweathermap.org/img/wn/10n@2x.png"
-//, description: "sunny", dt: 0.0))
+//    struct CurrentWeather_Previews: PreviewProvider {
+//        static var previews: some View {
+//            CurrentWeather(viewModel: WeatherModel(cityName: "Kaunas", temperature: 0.0, icon: "https://openweathermap.org/img/wn/01n@2x.png", description: "sunny", dt: 0.0))
+//        }
 //    }
-//}
->>>>>>> main
