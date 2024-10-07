@@ -1,21 +1,17 @@
 //
-//  HistoryView.swift
+//  File.swift
 //  TestAir-SwiftUI
 //
-//  Created by Rimvydas on 2024-09-16.
+//  Created by Rimvydas on 2024-10-02.
 //
 
 import SwiftUI
-import SwiftData
 
-struct HistoryView: View {
+struct TableViewCell: View {
+    var weather: WeatherModel
+    
     var body: some View {
         VStack {
-
-            Text("History")
-                .font(.largeTitle)
-                .padding(.top, 50)
-            
             Spacer()
             
             ZStack(alignment: .bottomLeading) {
@@ -56,19 +52,8 @@ struct HistoryView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
             }
             .frame(width: 300, height: 200)
-    
-        Spacer()
-    }
-    .background(Image("light_background")
-        .resizable()
-        .scaledToFill())
-    .ignoresSafeArea()
+            
+            Spacer()
+        }
     }
 }
-
-////MARK: - Preview
-//struct HistoryView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        HistoryView()
-//    }
-//}

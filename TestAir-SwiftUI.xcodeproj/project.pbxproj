@@ -20,6 +20,8 @@
 		BD2DEA332C9B4F1D00CC2B5E /* ResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2DEA322C9B4F1D00CC2B5E /* ResponseModel.swift */; };
 		BD2DEA352C9B50E400CC2B5E /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2DEA342C9B50E400CC2B5E /* WeatherModel.swift */; };
 		BD2DEA382C9B547300CC2B5E /* NetworkingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2DEA372C9B547300CC2B5E /* NetworkingController.swift */; };
+		BDDFE8BD2CADC94E008CA0F4 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDFE8BC2CADC94E008CA0F4 /* TableViewCell.swift */; };
+		BDDFE8C02CAF159B008CA0F4 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = BDDFE8BF2CAF159B008CA0F4 /* SDWebImageSwiftUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +58,7 @@
 		BD2DEA322C9B4F1D00CC2B5E /* ResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseModel.swift; sourceTree = "<group>"; };
 		BD2DEA342C9B50E400CC2B5E /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
 		BD2DEA372C9B547300CC2B5E /* NetworkingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingController.swift; sourceTree = "<group>"; };
+		BDDFE8BC2CADC94E008CA0F4 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BDDFE8C02CAF159B008CA0F4 /* SDWebImageSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -153,6 +157,7 @@
 		BD2DEA2B2C989E1700CC2B5E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				BDDFE8BC2CADC94E008CA0F4 /* TableViewCell.swift */,
 				BD2DEA002C9899CC00CC2B5E /* ContentView.swift */,
 				BD2DEA302C989EA600CC2B5E /* CurrentWeather.swift */,
 				BD2DEA2D2C989E4600CC2B5E /* HistoryView.swift */,
@@ -193,6 +198,9 @@
 			dependencies = (
 			);
 			name = "TestAir-SwiftUI";
+			packageProductDependencies = (
+				BDDFE8BF2CAF159B008CA0F4 /* SDWebImageSwiftUI */,
+			);
 			productName = "TestAir-SwiftUI";
 			productReference = BD2DE9FB2C9899CC00CC2B5E /* TestAir-SwiftUI.app */;
 			productType = "com.apple.product-type.application";
@@ -265,6 +273,9 @@
 				Base,
 			);
 			mainGroup = BD2DE9F22C9899CC00CC2B5E;
+			packageReferences = (
+				BDDFE8BE2CAF159B008CA0F4 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+			);
 			productRefGroup = BD2DE9FC2C9899CC00CC2B5E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -314,6 +325,7 @@
 				BD2DEA352C9B50E400CC2B5E /* WeatherModel.swift in Sources */,
 				BD2DEA032C9899CC00CC2B5E /* Item.swift in Sources */,
 				BD2DEA332C9B4F1D00CC2B5E /* ResponseModel.swift in Sources */,
+				BDDFE8BD2CADC94E008CA0F4 /* TableViewCell.swift in Sources */,
 				BD2DE9FF2C9899CC00CC2B5E /* TestAir_SwiftUIApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -644,6 +656,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		BDDFE8BE2CAF159B008CA0F4 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		BDDFE8BF2CAF159B008CA0F4 /* SDWebImageSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BDDFE8BE2CAF159B008CA0F4 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			productName = SDWebImageSwiftUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = BD2DE9F32C9899CC00CC2B5E /* Project object */;
 }

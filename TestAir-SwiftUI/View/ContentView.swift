@@ -12,9 +12,7 @@ struct ContentView: View {
     @State private var weatherModel: WeatherModel?
     @StateObject var weatherManager = WeatherManager()
     @State private var errorMessage: String? = nil
-    @State private var downloadedImage: UIImage? = nil
-    
-    
+
     var body: some View {
         NavigationView {
             VStack {
@@ -45,7 +43,7 @@ struct ContentView: View {
                                     RoundedRectangle(cornerRadius: 10)
                                         .stroke(Color.gray, lineWidth: 1)
                                 )
-                            NavigationLink(destination: CurrentWeather(viewModel: weatherModel ?? WeatherModel(cityName: "Kaunas", temperature: 0.0, icon: "sun.max", description: "sunny", dt: 0.0))) {
+                            NavigationLink(destination: CurrentWeather(viewModel: weatherModel ?? WeatherModel(cityName: "Kaunas", temperature: 0.0, icon: "cloud", description: "sunny", dt: 0.0))) {
                                 Text("Go")
                                     .foregroundColor(.white)
                                     .padding()
