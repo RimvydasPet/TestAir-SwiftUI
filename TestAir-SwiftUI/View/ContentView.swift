@@ -12,39 +12,37 @@ struct ContentView: View {
     @State private var weatherModel: WeatherModel?
     @StateObject var weatherManager = WeatherManager()
     @State private var errorMessage: String? = nil
-
+    @State private var isEditing: Bool = false
+    @State private var isNavigating: Bool = false
+    
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 Spacer()
-                
                 VStack {
                     Image("Logo")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 300, height: 75)
-                    
                     HStack {
-                        // TextField for input
-                        TextField("Enter city name", text: $inputText)
-                            .padding()
-                            .frame(maxWidth: .infinity, maxHeight: 50)
-                            .background(Color.white)
-                            .cornerRadius(10)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color.gray, lineWidth: 1)
-                            )
+                        TextField("Enter city name", text: $inputText, onEditingChanged: { editing in
+                            self.isEditing = editing
+                        })
+                        .padding()
+                        .frame(maxWidth: .infinity, maxHeight: 50)
+                        .background(Color.white)
+                        .cornerRadius(10)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.gray, lineWidth: 1)
+                        )
+                        .onSubmit {
+                            fetchWeather()
+                        }
                         
-                        // "Go" button for fetching weather
                         Button(action: {
-                            weatherManager.fetchWeather(cityName: inputText) { (weather, error) in
-                                if let error = error {
-                                    self.errorMessage = error.localizedDescription
-                                } else if let weather = weather {
-                                    self.weatherModel = weather
-                                }
-                            }
+                            fetchWeather()
+                            isNavigating = true
                         }) {
                             Text("Go")
                                 .foregroundColor(.white)
@@ -56,24 +54,11 @@ struct ContentView: View {
                     }
                     .padding(.horizontal, 30)
                     .padding(.bottom, 20)
-                    
-                    // Conditional NavigationLink to weather details screen
-                    if let weatherModel = weatherModel {
-                        NavigationLink(
-                            destination: CurrentWeather(viewModel: weatherModel)) {
-                            Text("View Weather")
-                                .foregroundColor(.white)
-                                .padding()
-                                .frame(maxWidth: .infinity, maxHeight: 50)
-                                .background(Color.green)
-                                .cornerRadius(10)
-                        }
-                        .padding(.horizontal, 30)
+                    .navigationDestination(isPresented: $isNavigating) {
+                        CurrentWeather(viewModel: weatherModel ?? WeatherModel(cityName: "Kaunas", temperature: 0.0, icon: "cloud", description: "sunny", dt: 0.0))
                     }
                 }
                 .frame(maxHeight: .infinity)
-                
-                // Link to History screen
                 NavigationLink(destination: HistoryView()) {
                     Text("History")
                         .foregroundColor(.white)
@@ -94,14 +79,21 @@ struct ContentView: View {
             .ignoresSafeArea()
         }
     }
-
+    
+    private func fetchWeather() {
+        guard !inputText.isEmpty else {
+            errorMessage = "Please enter a valid city name."
+            return
+        }
+        
+        weatherManager.fetchWeather(cityName: inputText) { (weather, error) in
+            if let error = error {
+                self.errorMessage = error.localizedDescription
+            } else if let weather = weather {
+                self.weatherModel = weather
+                self.isNavigating = true
+            }
+        }
+    }
 }
 
-
-
-////MARK: - Preview
-//struct ContentView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ContentView()
-//    }
-//}
