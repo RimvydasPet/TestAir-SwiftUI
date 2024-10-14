@@ -7,6 +7,29 @@
 
 import SwiftUI
 
+enum WeatherAppError: LocalizedError {
+     case networkError
+     case parsingError
+     case unknownError
+     case wrongCityName
+     case customError(message: String)
+     
+     var errorDescription: String? {
+         switch self {
+         case .networkError:
+             return "Network error occurred. Please check your internet connection."
+         case .parsingError:
+             return "Failed to parse the weather data."
+         case .unknownError:
+             return "An unknown error occurred."
+         case .wrongCityName:
+             return "Please enter a valid city name."
+         case .customError(let message):
+             return message
+         }
+     }
+ }
+
 struct ContentView: View {
     @State private var inputText: String = ""
     @State private var weatherModel: WeatherModel?
@@ -14,6 +37,7 @@ struct ContentView: View {
     @State private var errorMessage: String? = nil
     @State private var isEditing: Bool = false
     @State private var isNavigating: Bool = false
+    @State private var showAlert = false
     
     var body: some View {
         NavigationStack {
@@ -42,7 +66,6 @@ struct ContentView: View {
                         
                         Button(action: {
                             fetchWeather()
-                            isNavigating = true
                         }) {
                             Text("Go")
                                 .foregroundColor(.white)
@@ -77,23 +100,34 @@ struct ContentView: View {
                     .scaledToFill()
             )
             .ignoresSafeArea()
+            .alert(isPresented: $showAlert) {
+                Alert(
+                    title: Text("Error"),
+                    message: Text(errorMessage ?? "An unknown error occurred."),
+                    dismissButton: .default(Text("OK"))
+                )
+            }
         }
     }
     
     private func fetchWeather() {
         guard !inputText.isEmpty else {
-            errorMessage = "Please enter a valid city name."
+            errorMessage = WeatherAppError.wrongCityName.errorDescription
+            showAlert = true
+            isNavigating = false
             return
         }
         
         weatherManager.fetchWeather(cityName: inputText) { (weather, error) in
             if let error = error {
                 self.errorMessage = error.localizedDescription
+                self.showAlert = true
             } else if let weather = weather {
                 self.weatherModel = weather
                 self.isNavigating = true
             }
         }
     }
+    
 }
 

@@ -66,11 +66,3 @@ struct CurrentWeather: View {
             .ignoresSafeArea()
         }
     }
-
-
-////MARK: - Preview
-//    struct CurrentWeather_Previews: PreviewProvider {
-//        static var previews: some View {
-//            CurrentWeather(viewModel: WeatherModel(cityName: "Kaunas", temperature: 0.0, icon: "https://openweathermap.org/img/wn/01n@2x.png", description: "sunny", dt: 0.0))
-//        }
-//    }
