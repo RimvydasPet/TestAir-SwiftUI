@@ -8,7 +8,8 @@
 import Foundation
 import SwiftUI
 
-struct WeatherModel {
+struct WeatherModel: Codable, Identifiable {
+     var id = UUID()
      var cityName: String
      var temperature: Double
      var icon: String
