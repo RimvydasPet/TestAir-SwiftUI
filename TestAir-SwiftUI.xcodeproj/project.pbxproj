@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		BD2DE9FF2C9899CC00CC2B5E /* TestAir_SwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2DE9FE2C9899CC00CC2B5E /* TestAir_SwiftUIApp.swift */; };
 		BD2DEA012C9899CC00CC2B5E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2DEA002C9899CC00CC2B5E /* ContentView.swift */; };
-		BD2DEA032C9899CC00CC2B5E /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2DEA022C9899CC00CC2B5E /* Item.swift */; };
 		BD2DEA052C9899CF00CC2B5E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD2DEA042C9899CE00CC2B5E /* Assets.xcassets */; };
 		BD2DEA082C9899CF00CC2B5E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD2DEA072C9899CF00CC2B5E /* Preview Assets.xcassets */; };
 		BD2DEA122C9899CF00CC2B5E /* TestAir_SwiftUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2DEA112C9899CF00CC2B5E /* TestAir_SwiftUITests.swift */; };
@@ -44,7 +43,6 @@
 		BD2DE9FB2C9899CC00CC2B5E /* TestAir-SwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TestAir-SwiftUI.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD2DE9FE2C9899CC00CC2B5E /* TestAir_SwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestAir_SwiftUIApp.swift; sourceTree = "<group>"; };
 		BD2DEA002C9899CC00CC2B5E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		BD2DEA022C9899CC00CC2B5E /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		BD2DEA042C9899CE00CC2B5E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BD2DEA072C9899CF00CC2B5E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		BD2DEA0D2C9899CF00CC2B5E /* TestAir-SwiftUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TestAir-SwiftUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -146,7 +144,6 @@
 		BD2DEA2A2C989DF200CC2B5E /* AppData */ = {
 			isa = PBXGroup;
 			children = (
-				BD2DEA022C9899CC00CC2B5E /* Item.swift */,
 				BD2DE9FE2C9899CC00CC2B5E /* TestAir_SwiftUIApp.swift */,
 			);
 			path = AppData;
@@ -320,7 +317,6 @@
 				BD2DEA312C989EA600CC2B5E /* CurrentWeather.swift in Sources */,
 				BD2DEA2E2C989E4600CC2B5E /* HistoryView.swift in Sources */,
 				BD2DEA352C9B50E400CC2B5E /* WeatherModel.swift in Sources */,
-				BD2DEA032C9899CC00CC2B5E /* Item.swift in Sources */,
 				BD2DEA332C9B4F1D00CC2B5E /* ResponseModel.swift in Sources */,
 				BD2DE9FF2C9899CC00CC2B5E /* TestAir_SwiftUIApp.swift in Sources */,
 			);

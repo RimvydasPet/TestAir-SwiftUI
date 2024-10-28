@@ -8,36 +8,38 @@
 import SwiftUI
 
 enum WeatherAppError: LocalizedError {
-     case networkError
-     case parsingError
-     case unknownError
-     case wrongCityName
-     case customError(message: String)
-     
-     var errorDescription: String? {
-         switch self {
-         case .networkError:
-             return "Network error occurred. Please check your internet connection."
-         case .parsingError:
-             return "Failed to parse the weather data."
-         case .unknownError:
-             return "An unknown error occurred."
-         case .wrongCityName:
-             return "Please enter a valid city name."
-         case .customError(let message):
-             return message
-         }
-     }
- }
+    case networkError
+    case parsingError
+    case unknownError
+    case wrongCityName
+    case customError(message: String)
+    
+    var errorDescription: String? {
+        switch self {
+        case .networkError:
+            return "Network error occurred. Please check your internet connection."
+        case .parsingError:
+            return "Failed to parse the weather data."
+        case .unknownError:
+            return "An unknown error occurred."
+        case .wrongCityName:
+            return "Please enter a valid city name."
+        case .customError(let message):
+            return message
+        }
+    }
+}
 
 struct ContentView: View {
     @State private var inputText: String = ""
-    @State private var weatherModel: WeatherModel?
+    @State private var weatherModel: WeatherDataModel?
     @StateObject var weatherManager = WeatherManager()
     @State private var errorMessage: String? = nil
     @State private var isEditing: Bool = false
     @State private var isNavigating: Bool = false
     @State private var showAlert = false
+    @Environment(\.modelContext) private var context
+    
     
     var body: some View {
         NavigationStack {
@@ -78,7 +80,7 @@ struct ContentView: View {
                     .padding(.horizontal, 30)
                     .padding(.bottom, 20)
                     .navigationDestination(isPresented: $isNavigating) {
-                        CurrentWeather(viewModel: weatherModel ?? WeatherModel(cityName: "Kaunas", temperature: 0.0, icon: "cloud", description: "sunny", dt: 0.0))
+                        CurrentWeather(viewModel: weatherModel ??  WeatherDataModel(cityName: "New York", temperature: 72.0, icon: "https://openweathermap.org/img/wn/01n@2x.png", description: "Cloudy", dt: 1728933148))
                     }
                 }
                 .frame(maxHeight: .infinity)
@@ -110,7 +112,7 @@ struct ContentView: View {
         }
     }
     
-    private func fetchWeather() {
+    func fetchWeather() {
         guard !inputText.isEmpty else {
             errorMessage = WeatherAppError.wrongCityName.errorDescription
             showAlert = true
@@ -124,10 +126,9 @@ struct ContentView: View {
                 self.showAlert = true
             } else if let weather = weather {
                 self.weatherModel = weather
+                context.insert(weather)
                 self.isNavigating = true
             }
         }
     }
-    
 }
-

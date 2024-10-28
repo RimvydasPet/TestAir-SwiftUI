@@ -6,32 +6,40 @@
 //
 
 import Foundation
-import SwiftUI
+import SwiftData
 
-struct WeatherModel: Codable, Identifiable {
-     var id = UUID()
-     var cityName: String
-     var temperature: Double
-     var icon: String
-     var description: String
+@Model
+class WeatherDataModel {
     
+    @Attribute(.unique) var id = UUID()
+    var cityName: String
+    var temperature: Double
+    var icon: String
+    var describing: String
     var dt: Double?
     
-    var temperatureString: String {
-        return String(format: "%.1f", temperature)
+    init(cityName: String, temperature: Double, icon: String, description: String, dt: Double?) {
+        self.cityName = cityName
+        self.temperature = temperature
+        self.icon = icon
+        self.describing = description
+        self.dt = dt
     }
-    
-    var date: Foundation.Date? {
-        guard let dt = dt else { return nil }
-        return Foundation.Date(timeIntervalSince1970: TimeInterval(dt))
-    }
-    
-    var formattedDate: String? {
-        guard let date = date else { return nil }
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EE\n  dd"
-        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-        return dateFormatter.string(from: date)
-    }
+   
+   var temperatureString: String {
+       return String(format: "%.1f", temperature)
+   }
+   
+   var date: Foundation.Date? {
+       guard let dt = dt else { return nil }
+       return Foundation.Date(timeIntervalSince1970: TimeInterval(dt))
+   }
+   
+   var formattedDate: String? {
+       guard let date = date else { return nil }
+       let dateFormatter = DateFormatter()
+       dateFormatter.dateFormat = "EE\n  dd"
+       dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+       return dateFormatter.string(from: date)
+   }
 }
-

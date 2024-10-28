@@ -10,23 +10,23 @@ import SwiftData
 
 @main
 struct TestAir_SwiftUIApp: App {
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            Item.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
+    // Create the ModelContainer for WeatherDataModel
+    let container: ModelContainer
+    
+    init() {
+        // Initialize the container and handle potential errors
         do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
+            container = try ModelContainer(for: WeatherDataModel.self)
         } catch {
-            fatalError("Could not create ModelContainer: \(error)")
+            fatalError("Failed to initialize the ModelContainer: \(error)")
         }
-    }()
-
+    }
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+            // Pass the model container's context to the environment
+                .environment(\.modelContext, container.mainContext)
         }
-        .modelContainer(sharedModelContainer)
     }
 }

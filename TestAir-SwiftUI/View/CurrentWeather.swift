@@ -8,18 +8,12 @@
 import SwiftUI
 
 struct CurrentWeather: View {
-    var viewModel: WeatherModel
+    var viewModel: WeatherDataModel
     @StateObject var weatherManager = WeatherManager()
     
     var body: some View {
         VStack {
-            
-            Text("Current Weather")
-                .font(.largeTitle)
-                .padding(.top, 50)
-            
             Spacer()
-            
             ZStack(alignment: .bottomLeading) {
                 RoundedRectangle(cornerRadius: 20)
                     .fill(Color.white.opacity(0.8))
@@ -31,14 +25,14 @@ struct CurrentWeather: View {
                     .padding(.bottom, 145)
                     .padding(.leading, 15)
                 
-                Text("\(viewModel.description)")
+                Text("\(viewModel.describing)")
                     .font(.subheadline)
                     .foregroundColor(.black)
                     .padding(.bottom, 160)
                     .padding(.leading, 80)
                     .frame(maxWidth: .infinity, alignment: .topLeading)
                 
-                Text((viewModel.formattedDate ?? "20.0"))
+                Text((viewModel.formattedDate ?? "Loading date"))
                     .font(.subheadline)
                     .foregroundColor(.black)
                     .padding([.bottom, .trailing], 15)
@@ -60,7 +54,7 @@ struct CurrentWeather: View {
             
             Spacer()
             }
-            .background( Image("dark_background")
+            .background(Image("dark_background")
                 .resizable()
                 .scaledToFill())
             .ignoresSafeArea()

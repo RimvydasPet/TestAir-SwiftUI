@@ -12,16 +12,14 @@ class WeatherManager: ObservableObject {
     let weatherURL = "https://api.openweathermap.org/data/2.5/weather?appid=90101379686294c192bf23f64e88f73c&units=metric"
     let iconURL = "https://openweathermap.org/img/wn/"
     
-    @Published var weather: WeatherModel?
+    @Published var weather: WeatherDataModel?
     @Published var weatherResponse: ResponseModel?
     @Published var errorMessage: String?
     
-    typealias WeatherCompletion = (WeatherModel?, Error?) -> Void
+    typealias WeatherCompletion = (WeatherDataModel?, Error?) -> Void
     
     func fetchWeather(cityName: String, completion: @escaping (WeatherCompletion)) {
-        
         let urlString = "\(weatherURL)&q=\(cityName)"
-        
         if let url = URL(string: urlString) {
             let session = URLSession(configuration: .default)
             let task = session.dataTask(with: url) { (data, response, error) in
@@ -51,8 +49,7 @@ class WeatherManager: ObservableObject {
     }
     
     // MARK: Private
-    
-    private func parseJSON(_ weatherData: Data) -> WeatherModel? {
+    private func parseJSON(_ weatherData: Data) -> WeatherDataModel? {
         let decoder = JSONDecoder()
         do {
             let decodedData = try decoder.decode(ResponseModel.self, from: weatherData)
@@ -62,7 +59,7 @@ class WeatherManager: ObservableObject {
             let condition = decodedData.weather[0].description
             let imageData = decodedData.weather[0].icon
             let iconUrl = "\(iconURL)\(imageData)@2x.png"
-            let weather = WeatherModel(cityName: name, temperature: temp, icon: iconUrl, description: condition, dt: date)
+            let weather = WeatherDataModel(cityName: name, temperature: temp, icon: iconUrl, description: condition, dt: date)
             return weather
         } catch {
             print("Parsing failed")

@@ -1,18 +1,19 @@
+import SwiftData
 import SwiftUI
 
 struct HistoryView: View {
     @StateObject private var dataLoader = DataLoader()
-
+    @Query(sort: \WeatherDataModel.dt, order: .reverse) var weatherDataModel: [WeatherDataModel]
+    
     var body: some View {
         VStack {
-            Text("History")
-                .font(.largeTitle)
-                .padding(.top, 50)
-
             Spacer()
             ScrollView {
+                Spacer()
                 VStack(spacing: 20) {
-                    ForEach(dataLoader.weatherData) { weather in
+                    ForEach(weatherDataModel) { weather in
+//                    This is for testing data:
+//                    ForEach(dataLoader.weatherData) { weather in
                         ZStack(alignment: .bottomLeading) {
                             RoundedRectangle(cornerRadius: 20)
                                 .fill(Color.white.opacity(0.8))
@@ -24,7 +25,7 @@ struct HistoryView: View {
                                 .padding(.bottom, 145)
                                 .padding(.leading, 15)
                             
-                            Text("\(weather.description)")
+                            Text("\(weather.describing)")
                                 .font(.subheadline)
                                 .foregroundColor(.black)
                                 .padding(.bottom, 160)
@@ -54,7 +55,6 @@ struct HistoryView: View {
                 }
                 .padding()
             }
-
             Spacer()
         }
         .background(
@@ -63,8 +63,5 @@ struct HistoryView: View {
                 .scaledToFill()
         )
         .ignoresSafeArea()
-        .onAppear {
-            dataLoader.loadWeatherData() // Load weather data when the view appears
-        }
     }
 }
