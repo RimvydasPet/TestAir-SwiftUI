@@ -63,11 +63,11 @@ struct ContentView: View {
                                 .stroke(Color.gray, lineWidth: 1)
                         )
                         .onSubmit {
-                            fetchWeather()
+                            fetchCityWeather()
                         }
                         
                         Button(action: {
-                            fetchWeather()
+                            fetchCityWeather()
                         }) {
                             Text("Go")
                                 .foregroundColor(.white)
@@ -112,7 +112,7 @@ struct ContentView: View {
         }
     }
     
-    func fetchWeather() {
+    func fetchCityWeather() {
         guard !inputText.isEmpty else {
             errorMessage = WeatherAppError.wrongCityName.errorDescription
             showAlert = true
@@ -121,13 +121,18 @@ struct ContentView: View {
         }
         
         weatherManager.fetchWeather(cityName: inputText) { (weather, error) in
-            if let error = error {
-                self.errorMessage = error.localizedDescription
-                self.showAlert = true
-            } else if let weather = weather {
-                self.weatherModel = weather
-                context.insert(weather)
-                self.isNavigating = true
+            DispatchQueue.main.async {
+                if let error = error {
+                    self.errorMessage = error.errorDescription
+                    self.showAlert = true
+                    self.isNavigating = false
+                } else if let weather = weather {
+                    self.weatherModel = weather
+                    context.insert(weather)
+                    self.isNavigating = true
+                    self.errorMessage = nil
+                    self.showAlert = false
+                }
             }
         }
     }

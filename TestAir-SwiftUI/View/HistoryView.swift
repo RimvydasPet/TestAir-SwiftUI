@@ -13,7 +13,6 @@ struct HistoryView: View {
         }
     
     var body: some View {
-        let dataToDisplay = sampleData ?? weatherDataModel
         ZStack {
             Image("light_background")
                 .resizable()

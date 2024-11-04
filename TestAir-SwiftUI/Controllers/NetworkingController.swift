@@ -18,23 +18,37 @@ class WeatherManager: ObservableObject {
     
     typealias WeatherCompletion = (WeatherDataModel?, Error?) -> Void
     
-    func fetchWeather(cityName: String, completion: @escaping (WeatherCompletion)) {
+    func fetchWeather(cityName: String, completion: @escaping (WeatherDataModel?, WeatherAppError?) -> Void) {
         let urlString = "\(weatherURL)&q=\(cityName)"
-        if let url = URL(string: urlString) {
-            let session = URLSession(configuration: .default)
-            let task = session.dataTask(with: url) { (data, response, error) in
-                guard let error = error else {
-                    if let safeData = data {
-                        if let weatherData = self.parseJSON(safeData) {
-                            completion(weatherData, nil)
-                        }
-                    }
+        guard let url = URL(string: urlString) else {
+            completion(nil, .customError(message: "Invalid URL"))
+            return
+        }
+        let session = URLSession(configuration: .default)
+        let task = session.dataTask(with: url) { data, response, error in
+            if error != nil {
+                completion(nil, .networkError)
+                return
+            }
+            if let httpResponse = response as? HTTPURLResponse {
+                if httpResponse.statusCode == 404 {
+                    completion(nil, .wrongCityName)
                     return
                 }
-                completion(nil, error)
             }
-            task.resume()
+            guard let data = data else {
+                completion(nil, .unknownError)
+                return
+            }
+            switch self.parseJSON(data) {
+            case .success(let weatherData):
+                completion(weatherData, nil)
+            case .failure(let parseError):
+                completion(nil, parseError)
+            }
         }
+        
+        task.resume()
     }
     
     func downloadImage(from url: URL, completion: @escaping (UIImage?) -> Void) {
@@ -49,7 +63,7 @@ class WeatherManager: ObservableObject {
     }
     
     // MARK: Private
-    private func parseJSON(_ weatherData: Data) -> WeatherDataModel? {
+    private func parseJSON(_ weatherData: Data) -> Result<WeatherDataModel, WeatherAppError> {
         let decoder = JSONDecoder()
         do {
             let decodedData = try decoder.decode(ResponseModel.self, from: weatherData)
@@ -60,10 +74,9 @@ class WeatherManager: ObservableObject {
             let imageData = decodedData.weather[0].icon
             let iconUrl = "\(iconURL)\(imageData)@2x.png"
             let weather = WeatherDataModel(cityName: name, temperature: temp, icon: iconUrl, description: condition, dt: date)
-            return weather
+            return .success(weather)
         } catch {
-            print("Parsing failed")
-            return nil
+            return .failure(.parsingError)
         }
     }
 }
