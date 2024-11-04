@@ -19,7 +19,6 @@
 		BD2DEA332C9B4F1D00CC2B5E /* ResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2DEA322C9B4F1D00CC2B5E /* ResponseModel.swift */; };
 		BD2DEA352C9B50E400CC2B5E /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2DEA342C9B50E400CC2B5E /* WeatherModel.swift */; };
 		BD2DEA382C9B547300CC2B5E /* NetworkingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2DEA372C9B547300CC2B5E /* NetworkingController.swift */; };
-		BDD323B02CBD9FF9002B630D /* DataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD323AF2CBD9FF9002B630D /* DataLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,7 +54,6 @@
 		BD2DEA322C9B4F1D00CC2B5E /* ResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseModel.swift; sourceTree = "<group>"; };
 		BD2DEA342C9B50E400CC2B5E /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
 		BD2DEA372C9B547300CC2B5E /* NetworkingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingController.swift; sourceTree = "<group>"; };
-		BDD323AF2CBD9FF9002B630D /* DataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,7 +170,6 @@
 			isa = PBXGroup;
 			children = (
 				BD2DEA372C9B547300CC2B5E /* NetworkingController.swift */,
-				BDD323AF2CBD9FF9002B630D /* DataLoader.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -311,7 +308,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BDD323B02CBD9FF9002B630D /* DataLoader.swift in Sources */,
 				BD2DEA012C9899CC00CC2B5E /* ContentView.swift in Sources */,
 				BD2DEA382C9B547300CC2B5E /* NetworkingController.swift in Sources */,
 				BD2DEA312C989EA600CC2B5E /* CurrentWeather.swift in Sources */,
