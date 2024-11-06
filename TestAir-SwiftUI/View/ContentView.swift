@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 enum WeatherAppError: LocalizedError {
     case networkError
@@ -38,6 +39,7 @@ struct ContentView: View {
     @State private var isEditing: Bool = false
     @State private var isNavigating: Bool = false
     @State private var showAlert = false
+    @State private var recordLimit = 7
     @Environment(\.modelContext) private var context
     
     var body: some View {
@@ -133,8 +135,29 @@ struct ContentView: View {
                     self.errorMessage = nil
                     self.showAlert = false
                     inputText = ""
+                    deleteOldRecordsIfNeeded()
+                    
                 }
             }
+        }
+    }
+    
+    func deleteOldRecordsIfNeeded() {
+        let fetchDescriptor = FetchDescriptor<WeatherDataModel>(
+            sortBy: [SortDescriptor(\WeatherDataModel.dt, order: .forward)]
+        )
+        do {
+            let records = try context.fetch(fetchDescriptor)
+            if records.count > recordLimit {
+                let excessCount = records.count - recordLimit
+                let recordsToDelete = records.prefix(excessCount)
+                for record in recordsToDelete {
+                    context.delete(record)
+                }
+                try context.save()
+            }
+        } catch {
+            print("Failed to delete old records: \(error)")
         }
     }
 }
