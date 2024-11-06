@@ -40,7 +40,6 @@ struct ContentView: View {
     @State private var showAlert = false
     @Environment(\.modelContext) private var context
     
-    
     var body: some View {
         NavigationStack {
             VStack {
@@ -54,18 +53,19 @@ struct ContentView: View {
                         TextField("Enter city name", text: $inputText, onEditingChanged: { editing in
                             self.isEditing = editing
                         })
+                        .foregroundColor(inputText.isEmpty ? .black : .black)
+                        .preferredColorScheme(.light)
                         .padding()
                         .frame(maxWidth: .infinity, maxHeight: 50)
-                        .background(Color.white)
+                        .background(.white)
                         .cornerRadius(10)
                         .overlay(
                             RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.gray, lineWidth: 1)
+                                .stroke(Color.black, lineWidth: 1)
                         )
                         .onSubmit {
                             fetchCityWeather()
                         }
-                        
                         Button(action: {
                             fetchCityWeather()
                         }) {
@@ -79,7 +79,8 @@ struct ContentView: View {
                     }
                     .padding(.horizontal, 30)
                     .padding(.bottom, 20)
-                    .navigationDestination(isPresented: $isNavigating) {
+                    .navigationDestination(isPresented: $isNavigating)
+                    {
                         CurrentWeather(viewModel: weatherModel ??  WeatherDataModel(cityName: "New York", temperature: 72.0, icon: "https://openweathermap.org/img/wn/01n@2x.png", description: "Cloudy", dt: 1728933148))
                     }
                 }
@@ -119,7 +120,6 @@ struct ContentView: View {
             isNavigating = false
             return
         }
-        
         weatherManager.fetchWeather(cityName: inputText) { (weather, error) in
             DispatchQueue.main.async {
                 if let error = error {
@@ -132,8 +132,16 @@ struct ContentView: View {
                     self.isNavigating = true
                     self.errorMessage = nil
                     self.showAlert = false
+                    inputText = ""
                 }
             }
         }
     }
 }
+
+////MARK: - Preview
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ContentView()
+//    }
+//}

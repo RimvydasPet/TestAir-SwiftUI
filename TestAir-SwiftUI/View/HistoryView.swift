@@ -6,11 +6,11 @@ struct HistoryView: View {
     @State private var contentSize: CGSize = .zero
     @State private var disable = true
     
-    // Initializer for sample data
-    var sampleData: [WeatherDataModel]?
-        init(sampleData: [WeatherDataModel]? = nil) {
-            self.sampleData = sampleData
-        }
+//    Test Data:
+//    var sampleData: [WeatherDataModel]?
+//        init(sampleData: [WeatherDataModel]? = nil) {
+//            self.sampleData = sampleData
+//        }
     
     var body: some View {
         ZStack {
@@ -21,12 +21,11 @@ struct HistoryView: View {
             VStack {
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(spacing: 20) {
-                        ForEach(weatherDataModel.prefix(5)) { weather in
+                        ForEach((weatherDataModel.prefix(5))) { weather in
                             ZStack(alignment: .bottomLeading) {
                                 RoundedRectangle(cornerRadius: 20)
-                                    .fill(Color.white.opacity(0.8))
+                                    .fill(Color.white.opacity(0.5))
                                     .frame(width: 300, height: 200)
-                                    .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
                                 
                                 AsyncImage(url: URL(string: weather.icon))
                                     .frame(width: 40, height: 40)
@@ -60,7 +59,6 @@ struct HistoryView: View {
                             }
                             .frame(width: 300, height: 200)
                         }
-                        
                     }
                 }
                 .frame(width: 300, height: 710)

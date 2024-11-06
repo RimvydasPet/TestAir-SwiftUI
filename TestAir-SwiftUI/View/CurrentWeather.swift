@@ -16,15 +16,14 @@ struct CurrentWeather: View {
             Spacer()
             ZStack(alignment: .bottomLeading) {
                 RoundedRectangle(cornerRadius: 20)
-                    .fill(Color.white.opacity(0.8))
+                    .fill(Color.white.opacity(0.7))
                     .frame(width: 300, height: 200)
-                    .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
                 
                 AsyncImage(url: URL(string: viewModel.icon))
                     .frame(width: 40, height: 40)
                     .padding(.bottom, 145)
                     .padding(.leading, 15)
-                
+
                 Text("\(viewModel.describing)")
                     .font(.subheadline)
                     .foregroundColor(.black)
@@ -51,12 +50,18 @@ struct CurrentWeather: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
             }
             .frame(width: 300, height: 200)
-            
             Spacer()
-            }
-            .background(Image("dark_background")
-                .resizable()
-                .scaledToFill())
-            .ignoresSafeArea()
         }
+        .background(Image("dark_background")
+            .resizable()
+            .scaledToFill())
+        .ignoresSafeArea()
     }
+}
+
+////MARK: - Preview
+//struct CurrentWeather_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CurrentWeather(viewModel: WeatherDataModel(cityName: "Houston", temperature: 88.0, icon: "https://openweathermap.org/img/wn/03d@2x.png", description: "Overcast", dt: 1693573200))
+//    }
+//}
