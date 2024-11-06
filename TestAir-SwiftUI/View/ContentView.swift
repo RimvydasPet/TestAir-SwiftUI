@@ -13,6 +13,7 @@ enum WeatherAppError: LocalizedError {
     case parsingError
     case unknownError
     case wrongCityName
+    case emptyCityName
     case customError(message: String)
     
     var errorDescription: String? {
@@ -25,6 +26,8 @@ enum WeatherAppError: LocalizedError {
             return "An unknown error occurred."
         case .wrongCityName:
             return "Please enter a valid city name."
+        case .emptyCityName:
+            return "Please enter city name."
         case .customError(let message):
             return message
         }
@@ -117,7 +120,7 @@ struct ContentView: View {
     
     func fetchCityWeather() {
         guard !inputText.isEmpty else {
-            errorMessage = WeatherAppError.wrongCityName.errorDescription
+            errorMessage = WeatherAppError.emptyCityName.errorDescription
             showAlert = true
             isNavigating = false
             return

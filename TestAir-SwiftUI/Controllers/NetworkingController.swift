@@ -42,12 +42,18 @@ class WeatherManager: ObservableObject {
             }
             switch self.parseJSON(data) {
             case .success(let weatherData):
-                completion(weatherData, nil)
+                if let iconUrl = URL(string: weatherData.icon) {
+                    self.downloadImage(from: iconUrl) { image in
+                        var updatedWeatherData = weatherData
+                        completion(updatedWeatherData, nil)
+                    }
+                } else {
+                    completion(weatherData, nil)
+                }
             case .failure(let parseError):
                 completion(nil, parseError)
             }
         }
-        
         task.resume()
     }
     
