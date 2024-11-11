@@ -14,6 +14,7 @@ enum WeatherAppError: LocalizedError {
     case unknownError
     case wrongCityName
     case emptyCityName
+    case cityDublicated
     case customError(message: String)
     
     var errorDescription: String? {
@@ -28,6 +29,8 @@ enum WeatherAppError: LocalizedError {
             return "Please enter a valid city name."
         case .emptyCityName:
             return "Please enter city name."
+        case .cityDublicated:
+            return "City already exist. Please enter another city name."
         case .customError(let message):
             return message
         }
@@ -125,6 +128,14 @@ struct ContentView: View {
             isNavigating = false
             return
         }
+
+        if cityExists(inputText) {
+            errorMessage = WeatherAppError.cityDublicated.errorDescription
+            showAlert = true
+            isNavigating = false
+            return
+        }
+
         weatherManager.fetchWeather(cityName: inputText) { (weather, error) in
             DispatchQueue.main.async {
                 if let error = error {
@@ -139,11 +150,24 @@ struct ContentView: View {
                     self.showAlert = false
                     inputText = ""
                     deleteOldRecordsIfNeeded()
-                    
                 }
             }
         }
     }
+
+    func cityExists(_ cityName: String) -> Bool {
+        let fetchDescriptor = FetchDescriptor<WeatherDataModel>(
+            predicate: #Predicate { $0.cityName == cityName }
+        )
+        do {
+            let matchingCities = try context.fetch(fetchDescriptor)
+            return !matchingCities.isEmpty
+        } catch {
+            print("Failed to check for duplicate city: \(error)")
+            return false
+        }
+    }
+
     
     func deleteOldRecordsIfNeeded() {
         let fetchDescriptor = FetchDescriptor<WeatherDataModel>(

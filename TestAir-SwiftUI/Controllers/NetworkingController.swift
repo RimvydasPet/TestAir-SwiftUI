@@ -44,7 +44,7 @@ class WeatherManager: ObservableObject {
             case .success(let weatherData):
                 if let iconUrl = URL(string: weatherData.icon) {
                     self.downloadImage(from: iconUrl) { image in
-                        var updatedWeatherData = weatherData
+                        let updatedWeatherData = weatherData
                         completion(updatedWeatherData, nil)
                     }
                 } else {

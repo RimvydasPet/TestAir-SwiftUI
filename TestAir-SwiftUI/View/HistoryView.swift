@@ -1,16 +1,19 @@
+//
+//  HistoryView.swift
+//  TestAir-SwiftUI
+//
+//  Created by Rimvydas on 2024-09-16.
+//
+
 import SwiftData
 import SwiftUI
 
 struct HistoryView: View {
     @Query(sort: \WeatherDataModel.dt, order: .reverse) var weatherDataModel: [WeatherDataModel]
+    @Environment(\.modelContext) private var context
     @State private var contentSize: CGSize = .zero
     @State private var disable = true
-    
-//    Test Data:
-//    var sampleData: [WeatherDataModel]?
-//        init(sampleData: [WeatherDataModel]? = nil) {
-//            self.sampleData = sampleData
-//        }
+    @State private var showAlert = false
     
     var body: some View {
         ZStack {
@@ -19,9 +22,19 @@ struct HistoryView: View {
                 .scaledToFill()
                 .ignoresSafeArea()
             VStack {
+                Button(action: clearAllWeatherData) {
+                    Text("Clear History")
+                        .foregroundColor(.white)
+                        .padding(.vertical, 10)
+                        .frame(maxWidth: 120)
+                        .background(Color.brown)
+                        .cornerRadius(10)
+                }
+                .padding(.leading, 200)
+
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(spacing: 20) {
-                        ForEach((weatherDataModel.prefix(5))) { weather in
+                        ForEach(weatherDataModel.prefix(5)) { weather in
                             ZStack(alignment: .bottomLeading) {
                                 RoundedRectangle(cornerRadius: 20)
                                     .fill(Color.white.opacity(0.5))
@@ -32,20 +45,20 @@ struct HistoryView: View {
                                     .padding(.bottom, 145)
                                     .padding(.leading, 15)
                                 
-                                Text("\(weather.describing)")
+                                Text(weather.describing)
                                     .font(.subheadline)
                                     .foregroundColor(.black)
                                     .padding(.bottom, 160)
                                     .padding(.leading, 80)
                                     .frame(maxWidth: .infinity, alignment: .topLeading)
                                 
-                                Text((weather.formattedDate ?? "20.0"))
+                                Text(weather.formattedDate ?? "20.0")
                                     .font(.subheadline)
                                     .foregroundColor(.black)
                                     .padding([.bottom, .trailing], 15)
                                     .frame(maxWidth: .infinity, alignment: .bottomTrailing)
                                 
-                                Text("\(weather.cityName)")
+                                Text(weather.cityName)
                                     .font(.subheadline)
                                     .foregroundColor(.black)
                                     .padding([.bottom, .leading], 15)
@@ -58,15 +71,37 @@ struct HistoryView: View {
                                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                             }
                             .frame(width: 300, height: 200)
+                            
                         }
                     }
+                    .frame(maxWidth: .infinity)
                 }
-                .frame(width: 300, height: 710)
+                .frame(maxWidth: .infinity, alignment: .center)
                 .contentMargins(.vertical, 20, for: .scrollContent)
             }
         }
+        .alert(isPresented: $showAlert) {
+            Alert(
+                title: Text("Database Cleared"),
+                message: Text("All weather data has been successfully deleted."),
+                dismissButton: .default(Text("OK"))
+            )
+        }
+    }
+    
+    private func clearAllWeatherData() {
+        for record in weatherDataModel {
+            context.delete(record)
+        }
+        do {
+            try context.save()
+            showAlert = true
+        } catch {
+            print("Failed to clear weather data: \(error)")
+        }
     }
 }
+
 
 ////MARK: - Preview
 //struct HistoryView_Previews: PreviewProvider {
