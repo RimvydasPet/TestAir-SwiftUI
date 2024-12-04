@@ -22,16 +22,17 @@ struct HistoryView: View {
                 .scaledToFill()
                 .ignoresSafeArea()
             VStack {
-                Button(action: clearAllWeatherData) {
-                    Text("Clear History")
-                        .foregroundColor(.white)
-                        .padding(.vertical, 10)
-                        .frame(maxWidth: 120)
-                        .background(Color.brown)
-                        .cornerRadius(10)
+                if !weatherDataModel.isEmpty {
+                    Button(action: clearAllWeatherData) {
+                        Text("Clear History")
+                            .foregroundColor(.white)
+                            .padding(.vertical, 10)
+                            .frame(maxWidth: 120)
+                            .background(Color.brown)
+                            .cornerRadius(10)
+                    }
+                    .padding(.leading, 200)
                 }
-                .padding(.leading, 200)
-
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(spacing: 20) {
                         ForEach(weatherDataModel.prefix(5)) { weather in

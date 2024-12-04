@@ -50,75 +50,86 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack {
-            VStack {
-                Spacer()
+        ZStack {
+            Image("light_background")
+                .resizable()
+                .scaledToFill()
+                .ignoresSafeArea()
+           
                 VStack {
-                    Image("Logo")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 300, height: 75)
-                    HStack {
-                        TextField("Enter city name", text: $inputText, onEditingChanged: { editing in
-                            self.isEditing = editing
-                        })
-                        .foregroundColor(inputText.isEmpty ? .black : .black)
-                        .preferredColorScheme(.light)
-                        .padding()
-                        .frame(maxWidth: .infinity, maxHeight: 50)
-                        .background(.white)
-                        .cornerRadius(10)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.black, lineWidth: 1)
-                        )
-                        .onSubmit {
-                            fetchCityWeather()
+                    Spacer()
+                    VStack {
+                        Image("Logo")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 300, height: 75)
+                        HStack {
+                            TextField("Enter city name", text: $inputText, onEditingChanged: { editing in
+                                self.isEditing = editing
+                            })
+                            .toolbar {
+                                ToolbarItem(placement: .keyboard) {
+                                    Button("Done") {
+                                        hideKeyboard()
+                                    }
+                                }
+                            }
+                            .foregroundColor(inputText.isEmpty ? .black : .black)
+                            .preferredColorScheme(.light)
+                            .padding()
+                        .frame(maxWidth: 300, maxHeight: 50)
+                            .background(.white)
+                            .cornerRadius(10)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(Color.black, lineWidth: 1)
+                            )
+                            .onSubmit {
+                                fetchCityWeather()
+                            }
+                            Button(action: {
+                                fetchCityWeather()
+                            }) {
+                                Text("Go")
+                                    .foregroundColor(.white)
+                                    .padding()
+                                    .frame(maxWidth: 60, maxHeight: 50)
+                                    .background(Color.blue)
+                                    .cornerRadius(10)
+                            }
                         }
-                        Button(action: {
-                            fetchCityWeather()
-                        }) {
-                            Text("Go")
-                                .foregroundColor(.white)
-                                .padding()
-                                .frame(maxWidth: 60, maxHeight: 50)
-                                .background(Color.blue)
-                                .cornerRadius(10)
+                        .padding(.horizontal, 30)
+                        .padding(.bottom, 20)
+                        .navigationDestination(isPresented: $isNavigating)
+                        {
+                            CurrentWeather(viewModel: weatherModel ??  WeatherDataModel(cityName: "New York", temperature: 72.0, icon: "https://openweathermap.org/img/wn/01n@2x.png", description: "Cloudy", dt: 1728933148))
                         }
                     }
-                    .padding(.horizontal, 30)
-                    .padding(.bottom, 20)
-                    .navigationDestination(isPresented: $isNavigating)
-                    {
-                        CurrentWeather(viewModel: weatherModel ??  WeatherDataModel(cityName: "New York", temperature: 72.0, icon: "https://openweathermap.org/img/wn/01n@2x.png", description: "Cloudy", dt: 1728933148))
+                    .frame(maxHeight: 800)
+                    NavigationLink(destination: HistoryView()) {
+                        Text("History")
+                            .foregroundColor(.white)
+                            .padding()
+                            .frame(maxWidth: 150)
+                            .background(Color.green)
+                            .cornerRadius(10)
                     }
+                    .padding(.horizontal, 120)
+                    .padding(.bottom, 30)
                 }
-                .frame(maxHeight: .infinity)
-                NavigationLink(destination: HistoryView()) {
-                    Text("History")
-                        .foregroundColor(.white)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.green)
-                        .cornerRadius(10)
+                .navigationBarHidden(true)
+                .alert(isPresented: $showAlert) {
+                    Alert(
+                        title: Text("Error"),
+                        message: Text(errorMessage ?? "An unknown error occurred."),
+                        dismissButton: .default(Text("OK"))
+                    )
                 }
-                .padding(.horizontal, 120)
-                .padding(.bottom, 30)
-            }
-            .navigationBarHidden(true)
-            .background(
-                Image("light_background")
-                    .resizable()
-                    .scaledToFill()
-            )
-            .ignoresSafeArea()
-            .alert(isPresented: $showAlert) {
-                Alert(
-                    title: Text("Error"),
-                    message: Text(errorMessage ?? "An unknown error occurred."),
-                    dismissButton: .default(Text("OK"))
-                )
             }
         }
+    }
+    func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
     
     func fetchCityWeather() {
@@ -128,14 +139,14 @@ struct ContentView: View {
             isNavigating = false
             return
         }
-
+        
         if cityExists(inputText) {
             errorMessage = WeatherAppError.cityDublicated.errorDescription
             showAlert = true
             isNavigating = false
             return
         }
-
+        
         weatherManager.fetchWeather(cityName: inputText) { (weather, error) in
             DispatchQueue.main.async {
                 if let error = error {
@@ -154,7 +165,7 @@ struct ContentView: View {
             }
         }
     }
-
+    
     func cityExists(_ cityName: String) -> Bool {
         let fetchDescriptor = FetchDescriptor<WeatherDataModel>(
             predicate: #Predicate { $0.cityName == cityName }
@@ -167,7 +178,7 @@ struct ContentView: View {
             return false
         }
     }
-
+    
     
     func deleteOldRecordsIfNeeded() {
         let fetchDescriptor = FetchDescriptor<WeatherDataModel>(
